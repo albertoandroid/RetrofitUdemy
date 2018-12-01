@@ -2,8 +2,10 @@ package com.androiddesdecero.retrofitudemy.ui;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -17,6 +19,8 @@ import com.androiddesdecero.retrofitudemy.api.WebService;
 import com.androiddesdecero.retrofitudemy.api.WebServiceApi;
 import com.androiddesdecero.retrofitudemy.model.Profesor;
 import com.androiddesdecero.retrofitudemy.shared_pref.SharedPrefManager;
+
+import java.io.ByteArrayOutputStream;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -82,6 +86,26 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         ivProfesor = findViewById(R.id.imageView);
+        if(profesor.getFoto()!=null){
+            ivProfesor.setImageBitmap(stringToImage(profesor.getFoto()));
+        }
+    }
+
+    private Bitmap stringToImage(String encondedString){
+        try{
+            byte[] encodeByte = Base64.decode(encondedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    private String imageToString(){
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 10, byteArrayOutputStream);
+        byte[] imgByte = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(imgByte, Base64.DEFAULT);
     }
 
     private void updateProfesor(){
