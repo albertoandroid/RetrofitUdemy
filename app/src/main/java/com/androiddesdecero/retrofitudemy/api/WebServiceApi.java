@@ -7,6 +7,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -28,4 +29,7 @@ public interface WebServiceApi {
 
     @PUT("api/update_sql")
     Call<Profesor> update(@Body Profesor profesor);
+
+    @GET("api/profesores")
+    Call<List<Profesor>> getProfesores();
 }
