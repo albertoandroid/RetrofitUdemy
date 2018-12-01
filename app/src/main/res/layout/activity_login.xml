@@ -71,7 +71,7 @@
                     android:layout_height="wrap_content" />
 
                 <Button
-                    android:id="@+id/btSignUp"
+                    android:id="@+id/btLogin"
                     android:layout_marginTop="24dp"
                     android:background="@drawable/gradient_bt"
                     android:text="@string/sign_in"

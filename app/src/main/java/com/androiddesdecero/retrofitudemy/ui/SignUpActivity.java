@@ -1,5 +1,6 @@
 package com.androiddesdecero.retrofitudemy.ui;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -55,7 +56,7 @@ public class SignUpActivity extends AppCompatActivity {
         tvLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             }
         });
     }
