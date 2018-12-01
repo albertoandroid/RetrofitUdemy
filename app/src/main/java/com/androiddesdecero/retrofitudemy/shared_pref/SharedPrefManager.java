@@ -58,4 +58,9 @@ public class SharedPrefManager {
         );
         return profesor;
     }
+
+    public void logOut(){
+        editor.clear();
+        editor.apply();
+    }
 }

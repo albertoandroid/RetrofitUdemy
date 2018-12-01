@@ -1,5 +1,6 @@
 package com.androiddesdecero.retrofitudemy.ui;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -61,7 +62,7 @@ public class ProfileActivity extends AppCompatActivity {
         tvLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Todo logout
+                logout();
             }
         });
 
@@ -73,5 +74,21 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         ivProfesor = findViewById(R.id.imageView);
+    }
+
+    private void logout(){
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        if(!SharedPrefManager.getInstance(this).isLoggedIn()){
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        }
     }
 }
