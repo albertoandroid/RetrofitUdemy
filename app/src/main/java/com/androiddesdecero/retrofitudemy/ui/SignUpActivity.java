@@ -1,4 +1,4 @@
-package com.androiddesdecero.retrofitudemy;
+package com.androiddesdecero.retrofitudemy.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.androiddesdecero.retrofitudemy.R;
 import com.androiddesdecero.retrofitudemy.api.WebServiceApi;
 import com.androiddesdecero.retrofitudemy.model.Profesor;
 
