@@ -27,7 +27,11 @@ public class WebService {
         return instance;
     }
 
-    public WebService createService(){
-        return retrofit.create(WebService.class);
+    public WebServiceApi createService(){
+        return retrofit.create(WebServiceApi.class);
+    }
+
+    public <S> S createService(Class<S> serviceClass){
+        return retrofit.create(serviceClass);
     }
 }
