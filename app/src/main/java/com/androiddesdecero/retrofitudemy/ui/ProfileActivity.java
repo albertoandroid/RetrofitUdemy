@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.androiddesdecero.retrofitudemy.R;
 import com.androiddesdecero.retrofitudemy.api.WebService;
+import com.androiddesdecero.retrofitudemy.api.WebServiceApi;
 import com.androiddesdecero.retrofitudemy.model.Profesor;
 import com.androiddesdecero.retrofitudemy.shared_pref.SharedPrefManager;
 
@@ -61,7 +63,7 @@ public class ProfileActivity extends AppCompatActivity {
         btUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Todo update profesor
+                updateProfesor();
             }
         });
 
@@ -80,6 +82,56 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         ivProfesor = findViewById(R.id.imageView);
+    }
+
+    private void updateProfesor(){
+        String email = etEmail.getText().toString().trim();
+        String name = etName.getText().toString().trim();
+
+        if(name.isEmpty()){
+            etName.setError(getResources().getString(R.string.name_error));
+            etName.requestFocus();
+            return;
+        }
+
+        if(email.isEmpty()){
+            etEmail.setError(getResources().getString(R.string.email_error));
+            etEmail.requestFocus();
+            return;
+        }
+
+        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+            etEmail.setError(getResources().getString(R.string.email_doesnt_match));
+            etEmail.requestFocus();
+            return;
+        }
+
+        profesor.setNombre(name);
+        profesor.setEmail(email);
+
+        Call<Profesor> call = WebService
+                .getInstance()
+                .createService(WebServiceApi.class)
+                .update(profesor);
+        call.enqueue(new Callback<Profesor>() {
+            @Override
+            public void onResponse(Call<Profesor> call, Response<Profesor> response) {
+                if(response.code() == 200){
+                    Log.d("TAG1", "Usuario actualizado correctamente");
+                    SharedPrefManager.getInstance(getApplicationContext())
+                            .saveProfesor(response.body());
+                }else if(response.code()==400){
+                    Log.d("TAG1", "Usuario no existe");
+                }else{
+                    Log.d("TAG1", "Error indeterminado");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Profesor> call, Throwable t) {
+
+            }
+        });
     }
 
     private void deleteById(){
