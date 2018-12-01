@@ -18,9 +18,13 @@ public class SharedPrefManager {
 
     private static SharedPrefManager instance;
     private Context context;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
     private SharedPrefManager(Context context){
         this.context = context;
+        sharedPreferences = context.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
     }
 
     public static synchronized SharedPrefManager getInstance(Context context){
@@ -31,12 +35,27 @@ public class SharedPrefManager {
     }
 
     public void saveProfesor(Profesor profesor){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putLong(SHARED_PREFERENCES_ID, profesor.getId());
         editor.putString(SHARED_PREFERENCES_NAME, profesor.getNombre());
         editor.putString(SHARED_PREFERENCES_EMAIL, profesor.getEmail());
         editor.putString(SHARED_PREFERENCES_FOTO, profesor.getFoto());
         editor.apply();
+    }
+
+    public boolean isLoggedIn(){
+        if(sharedPreferences.getLong(SHARED_PREFERENCES_ID, -1) != -1){
+            return true;
+        }
+        return false;
+    }
+
+    public Profesor getProfesor(){
+        Profesor profesor = new Profesor(
+                sharedPreferences.getLong(SHARED_PREFERENCES_ID, -1),
+                sharedPreferences.getString(SHARED_PREFERENCES_NAME, null),
+                sharedPreferences.getString(SHARED_PREFERENCES_EMAIL, null),
+                sharedPreferences.getString(SHARED_PREFERENCES_FOTO, null)
+        );
+        return profesor;
     }
 }
