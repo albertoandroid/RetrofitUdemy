@@ -1,6 +1,7 @@
 package com.androiddesdecero.retrofitudemy.ui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.androiddesdecero.retrofitudemy.R;
 import com.androiddesdecero.retrofitudemy.api.WebServiceApi;
 import com.androiddesdecero.retrofitudemy.model.Profesor;
+import com.androiddesdecero.retrofitudemy.shared_pref.SharedPrefManager;
 
 import java.util.List;
 
@@ -108,7 +110,11 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Profesor>> call, Response<List<Profesor>> response) {
                 if(response.code() == 200){
-                    Log.d("TAG1", "Profesor logeado");
+                    Log.d("TAG1", "Profesor logeado " + " id " + response.body().get(0).getId()
+                        + " email: " + response.body().get(0).getEmail());
+                    SharedPrefManager.getInstance(getApplicationContext())
+                            .saveProfesor(response.body().get(0));
+                    startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                 }else if (response.code()==404){
                     Log.d("TAG1", "Profesor no existe");
                 }else{
