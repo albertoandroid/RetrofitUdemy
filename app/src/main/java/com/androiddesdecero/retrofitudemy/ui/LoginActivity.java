@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.androiddesdecero.retrofitudemy.R;
+import com.androiddesdecero.retrofitudemy.api.WebService;
 import com.androiddesdecero.retrofitudemy.api.WebServiceApi;
 import com.androiddesdecero.retrofitudemy.model.Profesor;
 import com.androiddesdecero.retrofitudemy.shared_pref.SharedPrefManager;
@@ -97,15 +98,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void login(){
-        String BASE_URL = "http://10.0.2.2:8040/";
+        Call<List<Profesor>> call = WebService
+                .getInstance()
+                .createService(WebServiceApi.class)
+                .login(profesor);
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        WebServiceApi api = retrofit.create(WebServiceApi.class);
-        Call<List<Profesor>> call = api.login(profesor);
         call.enqueue(new Callback<List<Profesor>>() {
             @Override
             public void onResponse(Call<List<Profesor>> call, Response<List<Profesor>> response) {
