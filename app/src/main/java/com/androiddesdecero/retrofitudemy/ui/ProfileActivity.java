@@ -3,6 +3,9 @@ package com.androiddesdecero.retrofitudemy.ui;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -21,6 +24,7 @@ import com.androiddesdecero.retrofitudemy.model.Profesor;
 import com.androiddesdecero.retrofitudemy.shared_pref.SharedPrefManager;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -88,6 +92,38 @@ public class ProfileActivity extends AppCompatActivity {
         ivProfesor = findViewById(R.id.imageView);
         if(profesor.getFoto()!=null){
             ivProfesor.setImageBitmap(stringToImage(profesor.getFoto()));
+        }
+        ivProfesor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cambiarImagenPerfil();
+            }
+        });
+    }
+
+    private void cambiarImagenPerfil(){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, IMG_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == IMG_REQUEST && resultCode == RESULT_OK && data != null){
+            Uri path = data.getData();
+            try{
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), path);
+                if(bitmap != null){
+                    ivProfesor.setImageBitmap(bitmap);
+                    profesor.setFoto(imageToString());
+                }else{
+                    profesor.setFoto("");
+                }
+            }catch (IOException e){
+
+            }
         }
     }
 
