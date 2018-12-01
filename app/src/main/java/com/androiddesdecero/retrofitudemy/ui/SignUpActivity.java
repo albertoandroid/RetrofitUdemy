@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.androiddesdecero.retrofitudemy.R;
 import com.androiddesdecero.retrofitudemy.api.WebServiceApi;
 import com.androiddesdecero.retrofitudemy.model.Profesor;
+import com.androiddesdecero.retrofitudemy.shared_pref.SharedPrefManager;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -131,5 +132,14 @@ public class SignUpActivity extends AppCompatActivity {
                 Log.d("TAG1 Error: ", t.getMessage().toString());
             }
         });
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        if(SharedPrefManager.getInstance(this).isLoggedIn()){
+            Log.d("TAG1", "Profesor ya esta logeado, enviando a Profile Activity");
+            startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+        }
     }
 }
