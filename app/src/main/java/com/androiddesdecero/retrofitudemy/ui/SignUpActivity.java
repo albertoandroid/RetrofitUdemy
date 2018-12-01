@@ -118,6 +118,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if(response.code() == 201){
                     Log.d("TAG1", "Profesor guardor correctamente");
+                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 }else if(response.code()==409){
                     Log.d("TAG1", "Profesor ya existe");
                 }else{
