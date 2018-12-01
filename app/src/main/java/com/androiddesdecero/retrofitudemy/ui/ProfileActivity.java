@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,8 +12,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.androiddesdecero.retrofitudemy.R;
+import com.androiddesdecero.retrofitudemy.api.WebService;
 import com.androiddesdecero.retrofitudemy.model.Profesor;
 import com.androiddesdecero.retrofitudemy.shared_pref.SharedPrefManager;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -69,11 +75,34 @@ public class ProfileActivity extends AppCompatActivity {
         tvDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Todo delete profesor
+                deleteById();
             }
         });
 
         ivProfesor = findViewById(R.id.imageView);
+    }
+
+    private void deleteById(){
+        Call<Void> call = WebService
+                .getInstance()
+                .createService()
+                .deleteById(profesor.getId());
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.code()==200){
+                    Log.d("TAG1", "Usuario borrado correctamente");
+                    logout();
+                }else{
+                    Log.d("TAG1", "Error no definido");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+
+            }
+        });
     }
 
     private void logout(){
