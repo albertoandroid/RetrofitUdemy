@@ -108,6 +108,14 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), CursoActivity.class));
             }
         });
+
+        tvLenguajes = findViewById(R.id.tvLenguajes);
+        tvLenguajes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), LenguajeActivity.class));
+            }
+        });
     }
 
     private void obtenerPresores(){

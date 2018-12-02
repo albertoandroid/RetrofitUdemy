@@ -1,6 +1,7 @@
 package com.androiddesdecero.retrofitudemy.api;
 
 import com.androiddesdecero.retrofitudemy.model.Curso;
+import com.androiddesdecero.retrofitudemy.model.Lenguaje;
 import com.androiddesdecero.retrofitudemy.model.Profesor;
 
 import java.util.List;
@@ -40,7 +41,6 @@ public interface WebServiceApi {
     /*
     CURSOS
      */
-
     @POST("api/crear_curso")
     Call<Void> crearCurso(@Body Curso curso);
 
@@ -49,4 +49,11 @@ public interface WebServiceApi {
 
     @POST("api/cursos_profesor")
     Call<List<Curso>> getCursosProfesor(@Body Profesor profesor);
+
+     /*
+    LENGUAJES DE PROGRAMACION
+     */
+
+    @POST("api/crear_lenguaje")
+    Call<Void> crearLenguaje(@Body Lenguaje lenguaje);
 }
