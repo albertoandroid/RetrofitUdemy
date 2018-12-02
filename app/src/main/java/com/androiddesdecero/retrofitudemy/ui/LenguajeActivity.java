@@ -64,6 +64,39 @@ public class LenguajeActivity extends AppCompatActivity {
                 crearLenguajeProfesor();
             }
         });
+
+        btVerLenguajesProfesor = findViewById(R.id.btVerLenguajesProfesor);
+        btVerLenguajesProfesor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                verLenguajesProfesor();
+            }
+        });
+    }
+
+    private void verLenguajesProfesor(){
+        Call<List<Lenguaje>> call = WebService
+                .getInstance()
+                .createService(WebServiceApi.class)
+                .verLenguajesProfesor(profesor);
+
+        call.enqueue(new Callback<List<Lenguaje>>() {
+            @Override
+            public void onResponse(Call<List<Lenguaje>> call, Response<List<Lenguaje>> response) {
+                if(response.code()==200){
+                    for(int i = 0; i<response.body().size(); i++){
+                        Log.d("TAG1", response.body().get(i).getNombre());
+                    }
+                }else if(response.code()==404){
+                    Log.d("TAG1", "No hay lenguajes");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Lenguaje>> call, Throwable t) {
+
+            }
+        });
     }
 
     private void crearLenguajeProfesor(){

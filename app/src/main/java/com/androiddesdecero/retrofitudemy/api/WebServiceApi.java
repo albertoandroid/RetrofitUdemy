@@ -63,4 +63,7 @@ public interface WebServiceApi {
 
     @POST("api/save_lenguaje_profesor")
     Call<Void> saveLenguajeProfesor(@Body ProfesorLenguaje profesorLenguaje);
+
+    @POST("api/lenguajes_profesor")
+    Call<List<Lenguaje>> verLenguajesProfesor(@Body Profesor profesor);
 }
