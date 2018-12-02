@@ -14,6 +14,8 @@ import com.androiddesdecero.retrofitudemy.model.Curso;
 import com.androiddesdecero.retrofitudemy.model.Profesor;
 import com.androiddesdecero.retrofitudemy.shared_pref.SharedPrefManager;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,6 +46,40 @@ public class CursoActivity extends AppCompatActivity {
                 crearCurso();
             }
         });
+
+        btVerTodosCurso = findViewById(R.id.btVerTodosCursos);
+        btVerTodosCurso.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                verTodosLosCursos();
+            }
+        });
+    }
+
+    private void verTodosLosCursos(){
+        Call<List<Curso>> call = WebService
+                .getInstance()
+                .createService(WebServiceApi.class)
+                .getTodosLosCursos();
+
+        call.enqueue(new Callback<List<Curso>>() {
+            @Override
+            public void onResponse(Call<List<Curso>> call, Response<List<Curso>> response) {
+                if(response.code()==200){
+                    for(int i=0; i<response.body().size(); i++){
+                        Log.d("TAG1", "Nombre Curso: " + response.body().get(i).getNombre()
+                        + "Codigo Profesor: " + response.body().get(i).getProfesorId());
+                    }
+                }else if(response.code()==404){
+                    Log.d("TAG1", "No hay cursos");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Curso>> call, Throwable t) {
+
+            }
+        });
     }
 
     private void crearCurso(){
@@ -58,7 +94,7 @@ public class CursoActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if(response.code()==201){
-                    Log.d("TAG!", "curso creado correctamente");
+                    Log.d("TAG1", "curso creado correctamente");
                 }
             }
 
@@ -68,4 +104,5 @@ public class CursoActivity extends AppCompatActivity {
             }
         });
     }
+
 }

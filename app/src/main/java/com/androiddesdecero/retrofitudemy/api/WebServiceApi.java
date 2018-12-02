@@ -43,4 +43,7 @@ public interface WebServiceApi {
 
     @POST("api/crear_curso")
     Call<Void> crearCurso(@Body Curso curso);
+
+    @GET("api/cursos")
+    Call<List<Curso>> getTodosLosCursos();
 }
