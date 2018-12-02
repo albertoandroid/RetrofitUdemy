@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:padding="20dp"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre Lenguaje Programación" />
+
+            <EditText
+                android:id="@+id/etLenguaje"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/ic_email"
+                android:hint="Lenguaje Programacion" />
+
+            <Button
+                android:id="@+id/btCrearLenguaje"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/gradient_bt_lenguajes"
+                android:text="Crear Lenguaje"
+                android:textColor="@color/colorWhite" />
+
+            <Button
+                android:id="@+id/btAsignarLenguajeProfesor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/gradient_bt_lenguajes"
+                android:text="Salvar Lenguaje Profesor"
+                android:textColor="@color/colorWhite" />
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <Button
+        android:layout_below="@+id/cardView"
+        android:id="@+id/btVerLenguajesProfesor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/gradient_bt_lenguajes"
+        android:text="Ver Lenguajes de Este Profesor"
+        android:textColor="@color/colorWhite" />
+
+    <Button
+        android:layout_below="@+id/btVerLenguajesProfesor"
+        android:id="@+id/btVerTodosLenguajes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/gradient_bt_lenguajes"
+        android:text="Ver Curso Todos Los Lenguajes"
+        android:textColor="@color/colorWhite" />
+</RelativeLayout>
