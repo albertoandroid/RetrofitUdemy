@@ -12,6 +12,7 @@ import com.androiddesdecero.retrofitudemy.api.WebService;
 import com.androiddesdecero.retrofitudemy.api.WebServiceApi;
 import com.androiddesdecero.retrofitudemy.model.Lenguaje;
 import com.androiddesdecero.retrofitudemy.model.Profesor;
+import com.androiddesdecero.retrofitudemy.model.ProfesorLenguaje;
 import com.androiddesdecero.retrofitudemy.shared_pref.SharedPrefManager;
 
 import java.util.List;
@@ -53,6 +54,39 @@ public class LenguajeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 verLenguajes();
+            }
+        });
+
+        btAsignarLenguajeProfesor = findViewById(R.id.btAsignarLenguajeProfesor);
+        btAsignarLenguajeProfesor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                crearLenguajeProfesor();
+            }
+        });
+    }
+
+    private void crearLenguajeProfesor(){
+        Lenguaje lenguaje = new Lenguaje();
+        lenguaje.setId(Long.parseLong(etLenguaje.getText().toString()));
+        ProfesorLenguaje profesorLenguaje = new ProfesorLenguaje();
+        profesorLenguaje.setLenguaje(lenguaje);
+        profesorLenguaje.setProfesor(profesor);
+        Call<Void> call = WebService
+                .getInstance()
+                .createService(WebServiceApi.class)
+                .saveLenguajeProfesor(profesorLenguaje);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.code()==201){
+                    Log.d("TAG1", "Hemos asociado un lenguaje a un profesor");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+
             }
         });
     }

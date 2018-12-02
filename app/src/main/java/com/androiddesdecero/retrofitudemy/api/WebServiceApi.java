@@ -3,6 +3,7 @@ package com.androiddesdecero.retrofitudemy.api;
 import com.androiddesdecero.retrofitudemy.model.Curso;
 import com.androiddesdecero.retrofitudemy.model.Lenguaje;
 import com.androiddesdecero.retrofitudemy.model.Profesor;
+import com.androiddesdecero.retrofitudemy.model.ProfesorLenguaje;
 
 import java.util.List;
 
@@ -59,4 +60,7 @@ public interface WebServiceApi {
 
     @GET("api/lenguajes")
     Call<List<Lenguaje>> getLenguajes();
+
+    @POST("api/save_lenguaje_profesor")
+    Call<Void> saveLenguajeProfesor(@Body ProfesorLenguaje profesorLenguaje);
 }
