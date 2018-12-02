@@ -46,4 +46,7 @@ public interface WebServiceApi {
 
     @GET("api/cursos")
     Call<List<Curso>> getTodosLosCursos();
+
+    @POST("api/cursos_profesor")
+    Call<List<Curso>> getCursosProfesor(@Body Profesor profesor);
 }

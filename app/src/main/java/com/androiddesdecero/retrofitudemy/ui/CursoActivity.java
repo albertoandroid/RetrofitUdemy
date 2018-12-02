@@ -54,6 +54,40 @@ public class CursoActivity extends AppCompatActivity {
                 verTodosLosCursos();
             }
         });
+
+        btVerCursosProfesor = findViewById(R.id.btVerCursosProfesor);
+        btVerCursosProfesor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                verCursosPorProfesor();
+            }
+        });
+    }
+
+    private void verCursosPorProfesor(){
+        Call<List<Curso>> call = WebService
+                .getInstance()
+                .createService(WebServiceApi.class)
+                .getCursosProfesor(profesor);
+
+        call.enqueue(new Callback<List<Curso>>() {
+            @Override
+            public void onResponse(Call<List<Curso>> call, Response<List<Curso>> response) {
+                if(response.code()==200){
+                    for(int i=0; i<response.body().size(); i++){
+                        Log.d("TAG1", "Nombre Curso: " + response.body().get(i).getNombre()
+                                + " Codigo Profesor: " + response.body().get(i).getProfesorId());
+                    }
+                }else if(response.code()==404){
+                    Log.d("TAG1", "No hay cursos");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Curso>> call, Throwable t) {
+
+            }
+        });
     }
 
     private void verTodosLosCursos(){
