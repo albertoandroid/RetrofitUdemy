@@ -105,28 +105,32 @@ public class ProfileActivity extends AppCompatActivity {
         tvCurso.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Call<List<Profesor>> call = WebService
-                        .getInstance()
-                        .createService(WebServiceApi.class)
-                        .getProfesores();
+                startActivity(new Intent(getApplicationContext(), CursoActivity.class));
+            }
+        });
+    }
 
-                call.enqueue(new Callback<List<Profesor>>() {
-                    @Override
-                    public void onResponse(Call<List<Profesor>> call, Response<List<Profesor>> response) {
-                        if(response.code()==200){
-                            for(int i=0; i<response.body().size(); i++){
-                                Log.d("TAG1", "Nombre: " + response.body().get(i).getNombre());
-                            }
-                        }else if(response.code()==404){
-                            Log.d("TAG1", "No hay profesores");
-                        }
+    private void obtenerPresores(){
+        Call<List<Profesor>> call = WebService
+                .getInstance()
+                .createService(WebServiceApi.class)
+                .getProfesores();
+
+        call.enqueue(new Callback<List<Profesor>>() {
+            @Override
+            public void onResponse(Call<List<Profesor>> call, Response<List<Profesor>> response) {
+                if(response.code()==200){
+                    for(int i=0; i<response.body().size(); i++){
+                        Log.d("TAG1", "Nombre: " + response.body().get(i).getNombre());
                     }
+                }else if(response.code()==404){
+                    Log.d("TAG1", "No hay profesores");
+                }
+            }
 
-                    @Override
-                    public void onFailure(Call<List<Profesor>> call, Throwable t) {
+            @Override
+            public void onFailure(Call<List<Profesor>> call, Throwable t) {
 
-                    }
-                });
             }
         });
     }
