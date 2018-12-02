@@ -14,6 +14,8 @@ import com.androiddesdecero.retrofitudemy.model.Lenguaje;
 import com.androiddesdecero.retrofitudemy.model.Profesor;
 import com.androiddesdecero.retrofitudemy.shared_pref.SharedPrefManager;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -45,7 +47,41 @@ public class LenguajeActivity extends AppCompatActivity {
                 crearLenguaje();
             }
         });
+
+        btVerTodosLenguajes = findViewById(R.id.btVerTodosLenguajes);
+        btVerTodosLenguajes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                verLenguajes();
+            }
+        });
     }
+
+    private void verLenguajes(){
+        Call<List<Lenguaje>> call = WebService
+                .getInstance()
+                .createService(WebServiceApi.class)
+                .getLenguajes();
+
+        call.enqueue(new Callback<List<Lenguaje>>() {
+            @Override
+            public void onResponse(Call<List<Lenguaje>> call, Response<List<Lenguaje>> response) {
+                if(response.code()==200){
+                    for(int i = 0; i<response.body().size(); i++){
+                        Log.d("TAG1", response.body().get(i).getNombre());
+                    }
+                }else if(response.code()==404){
+                    Log.d("TAG1", "No hay lenguajes");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Lenguaje>> call, Throwable t) {
+
+            }
+        });
+    }
+
     private void crearLenguaje(){
         Lenguaje lenguaje = new Lenguaje();
         lenguaje.setNombre(etLenguaje.getText().toString());

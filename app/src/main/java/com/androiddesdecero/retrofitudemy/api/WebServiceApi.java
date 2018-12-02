@@ -56,4 +56,7 @@ public interface WebServiceApi {
 
     @POST("api/crear_lenguaje")
     Call<Void> crearLenguaje(@Body Lenguaje lenguaje);
+
+    @GET("api/lenguajes")
+    Call<List<Lenguaje>> getLenguajes();
 }
