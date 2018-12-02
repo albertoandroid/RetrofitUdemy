@@ -1,5 +1,6 @@
 package com.androiddesdecero.retrofitudemy.api;
 
+import com.androiddesdecero.retrofitudemy.model.Curso;
 import com.androiddesdecero.retrofitudemy.model.Profesor;
 
 import java.util.List;
@@ -18,6 +19,9 @@ import retrofit2.http.Path;
 
 public interface WebServiceApi {
 
+    /*
+    PROFESORES
+     */
     @POST("/api/sign_up")
     Call<Void> registrarProfesor(@Body Profesor profesor);
 
@@ -32,4 +36,11 @@ public interface WebServiceApi {
 
     @GET("api/profesores")
     Call<List<Profesor>> getProfesores();
+
+    /*
+    CURSOS
+     */
+
+    @POST("api/crear_curso")
+    Call<Void> crearCurso(@Body Curso curso);
 }
